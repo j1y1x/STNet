@@ -1,54 +1,78 @@
-# STNet
+# STNet: Spectral Transformation Network for Operator Eigenvalue Problems
 
-### Basic Usage
+[![STNet](docs/out.png)](docs/overview.png)
 
-train.py：run train.py to compute eigenvalues
+STNet is a learning-based approach for computing eigenvalues and eigenfunctions of linear operators. It trains a neural network under spectral transformations so that target eigenpairs become easier to learn, enabling stable multi-eigenpair training in one run.
 
-plot_loss.py：draw the descending curve of the loss
-
-predict.py：draw the image of the characteristic function
+> ![STNet overview](docs/overview.png)
 
 ---
 
-## How to Run Different Problems
+## Highlights
 
-### 1. Harmonic Problem
+- Deflation projection: remove already-learned eigensubspaces to avoid mode collapse and stabilize subsequent eigenpairs.
+- Filter transform: reshape the spectrum (amplify a target interval, suppress outside) to improve convergence and accuracy.
+- End-to-end multi-eigenpair learning: obtain several eigenpairs in one training process.
+- Benchmarks covered: Harmonic, Schrödinger Oscillator, Fokker–Planck.
 
-```bash
-python train.py --d 2 --problem_type Harmonic --device cpu
-```
+---
 
-or use GPU：
+## Method
 
-```bash
-python train.py --d 2 --problem_type Harmonic --device cuda
-```
+Let $L $ be a linear operator and $v_i $ the i-th eigenfunction. STNet represents $v_i$ with an MLP and applies two transforms each iteration:
 
-### 2. Oscillator Problem
+1) Deflation: $D_i(L) = L − Q_{i−1} Σ_{i−1} Q_{i−1}^T$, where $Q_{i−1} = [ṽ_1, …, ṽ_{i−1}]$ and $Σ_{i−1} = diag(λ̃_1, …, λ̃_{i−1})$, to remove the span of learned eigenfunctions.
+2) Filter: $F_i(L) = ∏_{j=1}^{i−1} [(L − (\tilde{\lambda}_j − ξ) I)(L − (\tilde{\lambda}_j + ξ) I)]$, which enlarges spectral gaps near target eigenvalues.
 
-```bash
-python train.py --d 2 --problem_type Oscillator --device cpu
-```
+A residual-style loss encourages $v_i$ to match the action of the transformed operator without explicit inverses.
 
-or use GPU：
+---
 
-```bash
-python train.py --d 2 --problem_type Oscillator --device cuda
-```
+## Environment
 
-### 3. Planck Problem
+- Python ≥ 3.9
+- PyTorch
+- CPU or CUDA GPU
 
-```bash
-python train.py --d 2 --problem_type Planck --device cpu
-```
+---
 
-or use GPU：
+## Quick Start
 
-```bash
-python train.py --d 2 --problem_type Planck --device cuda
-```
+From repo root:
 
-- `--d` specifies the dimension of the problem.
-- `--problem_type` selects the problem type (Harmonic, Oscillator, Planck).
-- `--device` selects the computing device (cpu or cuda), automatically detected if not specified.
+    # 2D Harmonic on GPU
+    python train.py --d 2 --problem_type Harmonic --device cuda
+    
+    # 2D Harmonic on CPU
+    python train.py --d 2 --problem_type Harmonic --device cpu
+
+Other problems:
+
+    # Schrödinger Oscillator
+    python train.py --d 2 --problem_type Oscillator --device cuda
+    
+    # Fokker–Planck (named Planck)
+    python train.py --d 2 --problem_type Planck --device cuda
+
+Common args:
+
+- --d : problem dimension (e.g., 1/2/5)
+- --problem_type : Harmonic | Oscillator | Planck
+- --device : cpu | cuda
+
+---------
+
+## Loss Curves & Visualization
+
+    # Plot training loss curves
+    python plot_loss.py
+    
+    # Visualize learned eigenfunctions
+    python predict.py
+
+---
+
+## Citation
+
+
 
