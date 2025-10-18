@@ -4,7 +4,7 @@
 
 STNet is a learning-based approach for computing eigenvalues and eigenfunctions of linear operators. It trains a neural network under spectral transformations so that target eigenpairs become easier to learn, enabling stable multi-eigenpair training in one run.
 
-> ![STNet overview](docs/overview.png)
+![STNet overview](docs/overview.png)
 
 ---
 
