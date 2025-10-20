@@ -19,7 +19,7 @@ STNet is a learning-based approach for computing eigenvalues and eigenfunctions 
 
 ## Method
 
-Let $L $ be a linear operator and $v_i $ the i-th eigenfunction. STNet represents $v_i$ with an MLP and applies two transforms each iteration:
+Let $L$ be a linear operator and $v_i$ the i-th eigenfunction. STNet represents $v_i$ with an MLP and applies two transforms each iteration:
 
 1) Deflation: $D_i(L) = L − Q_{i−1} Σ_{i−1} Q_{i−1}^T$, where $Q_{i−1} = [ṽ_1, …, ṽ_{i−1}]$ and $Σ_{i−1} = diag(λ̃_1, …, λ̃_{i−1})$, to remove the span of learned eigenfunctions.
 2) Filter: $F_i(L) = ∏_{j=1}^{i−1} [(L − (\tilde{\lambda}_j − ξ) I)(L − (\tilde{\lambda}_j + ξ) I)]$, which enlarges spectral gaps near target eigenvalues.
