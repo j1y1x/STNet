@@ -1,4 +1,4 @@
-# STNet: Spectral Transformation Network for Operator Eigenvalue Problems
+# STNet: Spectral Transformation Network for Operator Eigenvalue Problems (NeurIPS 2025)
 
 [![STNet](docs/out.png)](docs/overview.png)
 
@@ -72,7 +72,24 @@ Common args:
 
 ---
 
+
+
+## Acknowledgements
+
+  We would like to express our gratitude to all collaborators, fellow students, and anonymous reviewers for their valuable assistance. Special thanks are extended to [Kuan Xu](http://staff.ustc.edu.cn/~kuanxu/) for significant support.
+  And we would like to thank the following open-source projects and research works: [PMNN](https://github.com/SummerLoveRain/PMNN_IPMNN) for model architecture
+
 ## Citation
 
-
-
+ If you use SNeT in your research, please use the following BibTeX entry.
+```
+@misc{wang2025stnetspectraltransformationnetwork,
+      title={STNet: Spectral Transformation Network for Solving Operator Eigenvalue Problem}, 
+      author={Hong Wang and Jiang Yixuan and Jie Wang and Xinyi Li and Jian Luo and Huanshuo Dong},
+      year={2025},
+      eprint={2510.23986},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2510.23986}, 
+}
+```
